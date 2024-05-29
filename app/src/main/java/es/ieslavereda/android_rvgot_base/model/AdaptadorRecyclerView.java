@@ -14,7 +14,7 @@ import java.util.List;
 
 import es.ieslavereda.android_rvgot_base.R;
 
-public class AdaptadorRecyclerView extends RecyclerView.Adapter<AdaptadorRecyclerView.ViewHolder> {
+public class AdaptadorRecyclerView extends RecyclerView.Adapter<AdaptadorRecyclerView.ViewHolder> implements View.OnClickListener {
     private LayoutInflater layoutInflater;
     private List<Personaje> personajes;
     private View.OnClickListener onClickListener;
@@ -45,6 +45,14 @@ public class AdaptadorRecyclerView extends RecyclerView.Adapter<AdaptadorRecycle
     public void setOnClickListener(View.OnClickListener onClickListener){
         this.onClickListener=onClickListener;
     }
+
+    @Override
+    public void onClick(View v) {
+        if (onClickListener!=null){
+            onClickListener.onClick(v);
+        }
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private ImageView image;
         private TextView nombre,casa;
