@@ -28,7 +28,7 @@ import es.ieslavereda.android_rvgot_base.model.Personaje;
 import es.ieslavereda.android_rvgot_base.model.PersonajeRepository;
 import es.ieslavereda.android_rvgot_base.model.creadorDePersonajes;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity{
     private RecyclerView recyclerView;
     private List<Personaje> personajes;
     private FloatingActionButton add;
@@ -39,6 +39,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView=findViewById(R.id.recyclerView);
         add=findViewById(R.id.addPersonaje);
         AdaptadorRecyclerView adaptador=new AdaptadorRecyclerView(this);
+        adaptador.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Personaje personaje=PersonajeRepository.getInstance().get(recyclerView.getChildAdapterPosition(v));
+                Intent intent=new Intent(getApplicationContext(), ObservarPersonaje.class);
+                intent.putExtra("personajeEnviado",personaje);
+                startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(adaptador);
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         ActivityResultLauncher<Intent> activityResultLauncher=registerForActivityResult(
@@ -57,12 +66,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent=new Intent(this, creadorDePersonajes.class);
             activityResultLauncher.launch(intent);
         });
-    }
-    @Override
-    public void onClick(View view){
-        Personaje personaje=PersonajeRepository.getInstance().get(recyclerView.getChildAdapterPosition(view));
-        Intent intent=new Intent(this, ObservarPersonaje.class);
-        intent.putExtra("personajeEnviado",personaje);
-        startActivity(intent);
     }
 }

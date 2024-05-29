@@ -24,6 +24,9 @@
         <activity android:name=".model.creadorDePersonajes">
 
         </activity>
+        <activity android:name=".ObservarPersonaje">
+
+        </activity>
     </application>
 
 </manifest>
